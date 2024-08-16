@@ -1,9 +1,6 @@
 "use client";
 import { useState } from "react";
 import { createIssueDescription, createGithubIssue } from "@/app/actions";
-import exp from "constants";
-import dynamic from "next/dynamic";
-// import IssueEditor from "./IssueEditor";
 import IssueEditor from "./IssueEditor";
 
 export interface Concern {
@@ -24,7 +21,7 @@ export default function AccessibilityConcernCard({
   remove,
 }: {
   concern: Concern;
-  remove: (id: string) => void;
+  remove: () => void;
 }) {
   //   const [expanded, setExpanded] = useState(false);
   const [issue, setIssue] = useState<IssueState>({
@@ -48,12 +45,13 @@ export default function AccessibilityConcernCard({
   }
 
   async function postToGithub(title, body, repo) {
-    const message= await createGithubIssue(title, body, repo);
+    const message = await createGithubIssue(title, body, repo);
     console.log("MESSAGE", message);
-    setIssue({ data: message, isLoading: false, error: false });
+    setIssue({ data: message.url, isLoading: false, error: false });
   }
 
-  function handleCreateIssue() {
+  function handleCreateIssue(e) {
+    e.preventDefault();
     setIssue({ data: "", isLoading: true, error: false });
     createIssue();
   }
@@ -67,12 +65,15 @@ export default function AccessibilityConcernCard({
   }
 
   return (
-    <div
-      className="bg-purple-100 m-5 rounded-lg p-3 flex items-center"
-    >
+    <div className="bg-purple-100 m-5 rounded-lg p-3 flex items-center">
       <div className="flex-grow">
         {issue.data ? (
-          <IssueEditor initialIssue={issue.data} initialTitle={concern.title} create={handleCreateGithubIssue} />
+          <IssueEditor
+            initialIssue={issue.data}
+            initialTitle={concern.title}
+            create={handleCreateGithubIssue}
+            remove={remove}
+          />
         ) : (
           <>
             <h3>
@@ -81,13 +82,14 @@ export default function AccessibilityConcernCard({
             </h3>
 
             <p>{concern.description}</p>
-            <button onClick={handleCreateIssue}>Create Issue</button>
+            <div className="flex justify-center my-5">
+
+            <button className="bg-green-500 rounded-sm px-2 py-1" onClick={handleCreateIssue}>Create Issue</button>
+            <button className=" bg-red-400 rounded-sm px-2 py-1" onClick={remove}>Not Today</button>
+            </div>
           </>
         )}
       </div>
-      <button className="ml-2" onClick={() => remove(concern.id)}>
-        X
-      </button>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import AccessibilityConcernCard, {Concern} from "./AccessibilityConcernCard";
-import { createIssueDescriptions } from "@/app/actions";
 
 export default function AccessibilityConcernCardList({initialConcerns}: {initialConcerns: Concern[];}) {
     const [concerns, setConcerns] = useState<Concern[]>(initialConcerns);

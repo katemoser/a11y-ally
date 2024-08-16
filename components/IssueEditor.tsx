@@ -3,71 +3,60 @@
 import { create } from "domain";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import MDEditor from "@uiw/react-md-editor";
 
 interface EditorProps {
   initialIssue: string;
   initialTitle: string;
   create: (title: string, body: string, repo: string) => void;
+  remove: () => void;
 }
- interface IssueState {
-    title: string;
-    markdown: string;
- }
+interface IssueState {
+  title: string;
+  markdown: string;
+}
 
 export default function IssueEditor({
   initialIssue,
   initialTitle,
-  create
+  create,
+  remove,
 }: EditorProps) {
+  const [title, setTitle] = useState(initialTitle);
+  const [markdown, setMarkdown] = useState(initialIssue);
 
-  const [formData, setFormData] = useState({title: initialTitle, markdown: initialIssue});
-
-  console.log("formData", formData, "createIssue:", create);
-  function handleChange(e) {
-    setFormData({
-        ...formData,
-        [e.target.name]: e.target.value
-        });
-    }
-
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log("submitting form, formData:", formData);
-    create(formData.title, formData.markdown, "katemoser/one-thing");
-    }
+    create(title, markdown, "katemoser/one-thing");
+  }
 
   return (
-    <form>
+    <div className="h-full flex flex-col">
       <>
         <h1>Title:</h1>
         <input
           type="text"
           name="title"
-          value={formData.title}
-          onChange={handleChange}
-          className="w-full border border-gray-300 rounded p-2"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full border border-gray-300 rounded p-2 bg-slate-900 text-slate-300"
         />
         <h2>Body:</h2>
-
-        <textarea
-            onChange={handleChange}
-            name="markdown"
-            value={formData.markdown}
-            className="w-full h-1000 border border-gray-300 rounded p-2"
-        />
-       <button onClick ={handleSubmit}>Create Issue on Github</button>
+        <div className="flex-grow">
+          <MDEditor value={markdown} onChange={setMarkdown} height="100%"/>
+        </div>
+        <div className="flex justify-center my-5">
+          <button
+            className="bg-green-500 rounded-sm px-2 py-1"
+            onClick={handleSubmit}
+          >
+            Create Issue on Github
+          </button>
+          <button className="bg-red-400 rounded-sm px-2 py-1" onClick={remove}>
+            Discard Issue
+          </button>
+        </div>
       </>
-    </form>
+    </div>
   );
 }
-
-// <>
-//     <h1>Title:</h1>
-//     <input type="text" value={title} onChange={(e) => console.log(e)} />
-//     <h2>Body:</h2>
-//     <textarea
-//         onChange={handleChange}
-//         value={markdown}
-//         className="w-90 h-500"
-//     />
-// </>
