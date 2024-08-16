@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-interface Concern {
+export interface Concern {
   id: string;
   issueTitle: string;
   issueDescription: string;
@@ -13,8 +13,10 @@ interface Concern {
 
 export default function AccessibilityConcernCard({
   concern,
+  remove
 }: {
   concern: Concern;
+  remove: (id:string) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -39,6 +41,9 @@ export default function AccessibilityConcernCard({
           </>
         )}
       </div>
+      <button className="ml-2" onClick={()=>remove(concern.id)}>
+        X
+      </button>
     </div>
   );
 }

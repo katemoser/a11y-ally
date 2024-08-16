@@ -5,6 +5,7 @@ const gitHubToken = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
 const greptileApiKey = process.env.GREPTILE_API_KEY;
 
 import AccessibilityConcernCard from "@/components/AccessibilityConcernCard";
+import AccessibilityConcernCardList from "@/components/AccessibilityConcernCardList";
 
 async function getAccessibilityConcerns(repo: string) {
   //
@@ -127,8 +128,8 @@ export default async function AccessibilityConcerns({
   const repo = params.repo;
   console.log(repo);
 
-  const issues = await getAccessibilityConcerns(repo);
-  console.log("ISSUES FROM API:", issues);
+  const concerns = await getAccessibilityConcerns(repo);
+  console.log("ISSUES FROM API:", concerns);
 
   async function deleteConcern(id: string) {
     "use server";
@@ -138,12 +139,7 @@ export default async function AccessibilityConcerns({
     <div>
       <h1>Accessibility Concerns for {repo}</h1>
       <p>Issues for {repo}</p>
-      <ul>
-        {issues.map((concern) => (
-
-          <AccessibilityConcernCard key={concern.id} concern={concern} />
-        ))}
-      </ul>
+      <AccessibilityConcernCardList initialConcerns={concerns}/>
     </div>
   );
 }
