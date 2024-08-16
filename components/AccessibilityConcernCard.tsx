@@ -47,14 +47,3 @@ export default function AccessibilityConcernCard({
     </div>
   );
 }
-// export default function AccessibilityConcernCard({concern, deleteConcern}) {
-//     return (
-//         <div className="bg-purple-100 m-5 rounded-lg p-3 flex items-center">
-//             <div className="flex-grow">
-//                 <h3 className="text-red-700">{concern.issueTitle}</h3>
-//                 <p>{concern.issueDescription}</p>
-//             </div>
-//             <button className="ml-2" onClick={deleteConcern}>X</button>
-//         </div>
-//     );
-// }

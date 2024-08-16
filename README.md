@@ -8,6 +8,11 @@ First, install dependencies:
 npm i
 ```
 
+Then, set up your ``.env`` file:
+```
+...
+```
+
 Then, run the development server:
 
 ```bash
