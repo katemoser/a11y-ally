@@ -1,8 +1,6 @@
 "use client";
 
-import { create } from "domain";
 import { useState } from "react";
-import ReactMarkdown from "react-markdown";
 import MDEditor from "@uiw/react-md-editor";
 
 interface EditorProps {
@@ -43,7 +41,7 @@ export default function IssueEditor({
         />
         <h2>Body:</h2>
         <div className="flex-grow">
-          <MDEditor value={markdown} onChange={setMarkdown} height="100%"/>
+          <MDEditor value={markdown} onChange={setMarkdown} height="100%" />
         </div>
         <div className="flex justify-center my-5">
           <button
