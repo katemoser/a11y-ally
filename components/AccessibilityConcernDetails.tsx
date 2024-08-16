@@ -2,12 +2,13 @@ import { Concern } from "@/types/components";
 
 interface AccessibilityConcernDetailsProps {
     concern: Concern;
-    createIssue: (file:string) => void;
+    createIssue: (file:string, repo:string) => void;
     remove: () => void;
+    repo: string;
 }
 
 
-export default function AccessibilityConcernDetails({ concern, createIssue, remove }:AccessibilityConcernDetailsProps) {
+export default function AccessibilityConcernDetails({ concern, createIssue, remove, repo }:AccessibilityConcernDetailsProps) {
     return (
         <>
             <h3>
@@ -19,7 +20,7 @@ export default function AccessibilityConcernDetails({ concern, createIssue, remo
             <div className="flex justify-center my-5">
               <button
                 className="bg-green-500 rounded-sm px-2 py-1"
-                onClick={()=> createIssue(concern.file)}
+                onClick={()=> createIssue(concern.file, repo)}
               >
                 Create Issue
               </button>

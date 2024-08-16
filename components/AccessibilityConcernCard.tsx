@@ -17,9 +17,11 @@ export interface IssueState {
 export default function AccessibilityConcernCard({
   concern,
   remove,
+  repo
 }: {
   concern: Concern;
   remove: () => void;
+  repo: string;
 }) {
   const { issue, handleIssueCreation, handleGithubIssueSubmission } = useIssueCreation();
 
@@ -42,6 +44,7 @@ export default function AccessibilityConcernCard({
           concern={concern}
           createIssue={handleIssueCreation}
           remove={remove}
+          repo={repo}
         />
       )}
     </div>

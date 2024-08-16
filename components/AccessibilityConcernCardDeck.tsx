@@ -6,8 +6,10 @@ import { useState } from "react";
 
 export default function AccessibilityConcernCardDeck({
   initialConcerns,
+  repo
 }: {
   initialConcerns: Concern[];
+  repo: string;
 }) {
   const [concerns, setConcerns] = useState(initialConcerns);
   const currentConcern = concerns[0];
@@ -31,6 +33,7 @@ export default function AccessibilityConcernCardDeck({
               key={currentConcern.id}
               concern={currentConcern}
               remove={popConcern}
+              repo={repo}
             />
           </div>
           <div> and {concerns.length - 1} more</div>

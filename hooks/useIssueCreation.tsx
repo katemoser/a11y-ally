@@ -16,9 +16,9 @@ export function useIssueCreation() {
     error: false,
   });
 
-  async function generateIssueDescription(file: string) {
+  async function generateIssueDescription(file: string, repo: string) {
     try {
-      const newIssue = await createIssueDescription(file);
+      const newIssue = await createIssueDescription(file, repo);
       console.log("NEW ISSUE", newIssue);
       setIssue({
         data: newIssue,
@@ -41,9 +41,9 @@ export function useIssueCreation() {
     setIssue({ data: "", isLoading: false, isSubmitted: true, error: false });
   }
 
-  function handleIssueCreation(file: string) {
+  function handleIssueCreation(file: string, repo: string) {
     setIssue({ data: "", isLoading: true, isSubmitted: false, error: false });
-    generateIssueDescription(file);
+    generateIssueDescription(file, repo);
   }
 
   function handleGithubIssueSubmission(
