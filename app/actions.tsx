@@ -12,8 +12,10 @@ async function getAccessibilityConcerns(repo: string) {
         content: `Look closely at this code base and find files that have accessibility concerns.
         The output response should be a json object formatted like this:
         {concerns: [{"id": string, "title": string, "description": string, "file": string},]}
-        where "id" is a unique identifier for the concern, "title" is a brief description of the concern,
-        "description" is a detailed description of the accessibility concerns in that file, and "file" is the file path where the concern is located.`,
+        where "id" is a unique identifier for the concern, "title" is a brief description of the concerns,
+        "description" is a detailed description of the accessibility concerns in that file, and "file" is the file path where the concern is located.
+        Only include one item in the concerns array for each file that has accessibility concerns. If there is more than one concern in that file, summarize
+        the concerns in both the title and the description. If the repo is written in a framework like React, Vue, or Angular, be sure to also check the components for accessibility concerns.`,
         role: "user",
       },
     ],
@@ -26,7 +28,7 @@ async function getAccessibilityConcerns(repo: string) {
     ],
     jsonMode: true,
     // sessionId: "accessibility-test",
-    genius: true,
+    // genius: true,
   };
 
   //   const options = {
@@ -104,29 +106,21 @@ async function getAccessibilityConcerns(repo: string) {
 //     const issues = JSON.parse(data.message);
 // }
 
-async function createIssueDescriptions(repo: string) {
+async function createIssueDescription(file:string) {
   const query = {
     messages: [
       {
-        content: `Look closely at this code base and find five accessibility concerns. Be very specific in your findings.
-          Create several github issues that take into account all of the above concerns.
-            There does not to be one issue per concern. Instead, you may group similar concerns together into one issue.
-            The output format should be formatted like this:
-            [
-                {
-                    "title": "title of the issue",
-                    "body": "body of the issue, formatted to be displayed as markdown"
-                    "labels": ["array of labels to apply to this issue"]
-                }, {...}]
-
-              In the body of the issue, include the following information:
-                - A description of the issue
+        content: `Look closely at the file ${file} and find all accessibility concerns.
+            The output response should be just the body of the issue formatted to be displayed as markdown.
+            Do not include anything other than the body of the issue in your response.
+              include the following information:
+                - A description of all accessibility concerns in the file
                 - The file path where the issue is located
-                - A code snippet of the issue
-                - A description of how to fix the issue
-                - A code snippet of the fixed code
-              Do not include any other text in your response accept for the json object. do not include any new line characters like '/n' in the json.
-              this response will be parsed into an object for use in a javascript application and must be pure json and nothing else`,
+                - for each accessibility concern in this file, include:
+                  - A code snippet of each of the concerns
+                  - A description of why this is a problem and how to fix the issue
+                  - A code snippet of the fixed code
+              `,
         role: "user",
       },
     ],
@@ -138,6 +132,7 @@ async function createIssueDescriptions(repo: string) {
       },
     ],
     sessionId: "accessibility-test",
+    // jsonMode: true,
     //   genius: true,
   };
 
@@ -154,37 +149,36 @@ async function createIssueDescriptions(repo: string) {
 
   const response = await fetch(`${baseUrl}/query`, options);
   console.log(response);
-  // const data = await response.json();
-  // console.log("DATA:", data);
+  const data = await response.json();
+  console.log("ISSUE DATA:", data);
+  return data.message
+//   const message = JSON.parse(data.message);
+//   console.log("ISSUE MESSAGE:", message);
   // const issues = JSON.parse(data.message);
   // console.log("ISSUES", issues);
-  const reader = response.body.getReader();
-  const decoder = new TextDecoder();
-  let jsonString = "";
-  let done = false;
+//   const reader = response.body.getReader();
+//   const decoder = new TextDecoder();
+//   let jsonString = "";
+//   let done = false;
 
-  while (!done) {
-    const { value, done: readerDone } = await reader.read();
-    done = readerDone;
+//   while (!done) {
+//     const { value, done: readerDone } = await reader.read();
+//     done = readerDone;
 
-    jsonString += decoder.decode(value, { stream: !done });
+//     jsonString += decoder.decode(value, { stream: !done });
 
-    // // Handle incomplete JSON
-    // try {
-    //     const parsedData = JSON.parse(jsonString);
-    //     console.log("Parsed Data:", parsedData);
-    //     // Do something with parsedData here (e.g., extracting issues)
-    //     issues = parsedData;
-    // } catch (error) {
-    //     if (done) {
-    //         console.error("Error parsing JSON:", error);
-    //     }
-    // }
-  }
-  console.log("JSON STRING", jsonString);
-  const data = JSON.parse(jsonString);
-  console.log("message", data.message);
-  return data.message;
+//     // // Handle incomplete JSON
+//     // try {
+//     //     const parsedData = JSON.parse(jsonString);
+//     //     console.log("Parsed Data:", parsedData);
+//     //     // Do something with parsedData here (e.g., extracting issues)
+//     //     issues = parsedData;
+//     // } catch (error) {
+//     //     if (done) {
+//     //         console.error("Error parsing JSON:", error);
+//     //     }
+//     // }
+//   }
 }
 
-export { getAccessibilityConcerns, createIssueDescriptions };
+export { getAccessibilityConcerns, createIssueDescription };

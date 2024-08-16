@@ -121,26 +121,53 @@ import AccessibilityConcernCardList from "@/components/AccessibilityConcernCardL
 //   return issues;
 // }
 
+// export default async function AccessibilityConcerns({
+//   params,
+// }: {
+//   params: { repo: string };
+// }) {
+//   const repo = params.repo;
+//   console.log(repo);
+
+//   const concerns = await getAccessibilityConcerns(repo);
+//   console.log("ISSUES FROM API:", concerns);
+
+//   async function deleteConcern(id: string) {
+//     "use server";
+//     console.log("Deleting issue with ID:", id);
+//   }
+//   return (
+//     <div>
+//       <h1>Accessibility Concerns for {repo}</h1>
+//       <p>Issues for {repo}</p>
+//       <AccessibilityConcernCardList initialConcerns={concerns}/>
+//     </div>
+//   );
+// }
+import { createIssueDescriptions } from "@/app/actions";
+
+
 export default async function AccessibilityConcerns({
-  params,
-}: {
-  params: { repo: string };
-}) {
-  const repo = params.repo;
-  console.log(repo);
+    params,
+  }: {
+    params: { repo: string };
+  }) {
+    const repo = params.repo;
+    console.log(repo);
 
-  const concerns = await getAccessibilityConcerns(repo);
-  console.log("ISSUES FROM API:", concerns);
+    // const issues = await createIssueDescriptions(repo);
+    // console.log("ISSUES FROM API:", issues);
 
-  async function deleteConcern(id: string) {
-    "use server";
-    console.log("Deleting issue with ID:", id);
+    const concerns = await getAccessibilityConcerns(repo);
+    // async function deleteConcern(id: string) {
+    //   "use server";
+    //   console.log("Deleting issue with ID:", id);
+    // }
+    return (
+        <div>
+        <h1>Accessibility Concerns for {repo}</h1>
+        <p>Issues for {repo}</p>
+        <AccessibilityConcernCardList initialConcerns={concerns}/>
+      </div>
+    );
   }
-  return (
-    <div>
-      <h1>Accessibility Concerns for {repo}</h1>
-      <p>Issues for {repo}</p>
-      <AccessibilityConcernCardList initialConcerns={concerns}/>
-    </div>
-  );
-}
