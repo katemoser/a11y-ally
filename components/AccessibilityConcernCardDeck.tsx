@@ -24,6 +24,7 @@ return (
         ) : (
             <div>
                 <AccessibilityConcernCard
+                    key={currentConcern.id}
                     concern={currentConcern}
                     remove={popConcern}
                 />
