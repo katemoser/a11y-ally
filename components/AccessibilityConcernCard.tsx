@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
-import { createIssueDescription } from "@/app/actions";
+import { createIssueDescription, createGithubIssue } from "@/app/actions";
 import exp from "constants";
+import dynamic from "next/dynamic";
+// import IssueEditor from "./IssueEditor";
 import IssueEditor from "./IssueEditor";
 
 export interface Concern {
@@ -45,11 +47,21 @@ export default function AccessibilityConcernCard({
     }
   }
 
+  async function postToGithub(title, body, repo) {
+    const message= await createGithubIssue(title, body, repo);
+    console.log("MESSAGE", message);
+    setIssue({ data: message, isLoading: false, error: false });
+  }
+
   function handleCreateIssue() {
     setIssue({ data: "", isLoading: true, error: false });
     createIssue();
   }
 
+  function handleCreateGithubIssue(title, body, repo) {
+    setIssue({ data: "", isLoading: true, error: false });
+    postToGithub(title, body, repo);
+  }
   if (issue.isLoading) {
     return <div>Loading...</div>;
   }
@@ -60,7 +72,7 @@ export default function AccessibilityConcernCard({
     >
       <div className="flex-grow">
         {issue.data ? (
-          <IssueEditor initialIssue={issue.data} title={concern.title} />
+          <IssueEditor initialIssue={issue.data} initialTitle={concern.title} create={handleCreateGithubIssue} />
         ) : (
           <>
             <h3>

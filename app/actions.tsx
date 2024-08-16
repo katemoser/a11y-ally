@@ -6,6 +6,7 @@ const greptileApiKey = process.env.GREPTILE_API_KEY;
 console.log("BASE URL:", baseUrl);
 
 async function getAccessibilityConcerns(repo: string) {
+  /* COMMENTING SO THAT IT DOESN'T MAKE A REQUEST TO GREPTILE
   const query = {
     messages: [
       {
@@ -15,7 +16,9 @@ async function getAccessibilityConcerns(repo: string) {
         where "id" is a unique identifier for the concern, "title" is a brief description of the concerns,
         "description" is a detailed description of the accessibility concerns in that file, and "file" is the file path where the concern is located.
         Only include one item in the concerns array for each file that has accessibility concerns. If there is more than one concern in that file, summarize
-        the concerns in both the title and the description. If the repo is written in a framework like React, Vue, or Angular, be sure to also check the components for accessibility concerns.`,
+        the concerns in both the title and the description.
+        The source code may be written in any language or framework. Adjust accordingly when looking for accessibility concerns.
+        Do not look for accessibility concerns in files that belong to third party libraries or frameworks.`,
         role: "user",
       },
     ],
@@ -58,7 +61,28 @@ async function getAccessibilityConcerns(repo: string) {
   const message = JSON.parse(data.message);
   console.log("MESSAGE:", message);
 
-  return message.concerns;
+  return message.concerns; */
+  const concerns = [
+    {
+      id: 'AC001',
+      title: 'Potential color contrast and keyboard navigation issues',
+      description: "The AllComplete component may have color contrast issues, especially in dark mode. The Button component used for 'View Reports' might lack proper focus indicators for keyboard navigation. The Card component should be reviewed to ensure it has appropriate ARIA attributes for screen readers.",
+      file: '/components/AllComplete.tsx'
+    },
+    {
+      id: 'AC002',
+      title: 'Color contrast and dark mode accessibility',
+      description: 'The global CSS file defines color variables for both light and dark modes. Some color combinations may not meet WCAG contrast requirements, particularly in dark mode. The transition between light and dark modes should be tested for smooth accessibility across various devices and assistive technologies.',
+      file: '/app/globals.css'
+    },
+    {
+      id: 'AC003',
+      title: 'Potential font size and color contrast issues',
+      description: "The Tailwind configuration extends the theme with custom colors and animations. Some color combinations might not meet accessibility standards for contrast ratios. The configuration doesn't explicitly set minimum font sizes, which could lead to readability issues on smaller screens or for users with visual impairments.",
+      file: '/tailwind.config.ts'
+    }
+  ]
+  return concerns;
 }
 
 // async function createIssueDescriptions(concernIds: string[]) {
@@ -107,6 +131,7 @@ async function getAccessibilityConcerns(repo: string) {
 // }
 
 async function createIssueDescription(file:string) {
+  /*
   const query = {
     messages: [
       {
@@ -114,9 +139,8 @@ async function createIssueDescription(file:string) {
             The output response should be just the body of the issue formatted to be displayed as markdown.
             Do not include anything other than the body of the issue in your response.
               include the following information:
-                - A description of all accessibility concerns in the file
-                - The file path where the issue is located
-                - for each accessibility concern in this file, include:
+                - The file path where the issues are located
+                - information about each accessibility issue in this file. Include:
                   - A code snippet of each of the concerns
                   - A description of why this is a problem and how to fix the issue
                   - A code snippet of the fixed code
@@ -152,33 +176,32 @@ async function createIssueDescription(file:string) {
   const data = await response.json();
   console.log("ISSUE DATA:", data);
   return data.message
-//   const message = JSON.parse(data.message);
-//   console.log("ISSUE MESSAGE:", message);
-  // const issues = JSON.parse(data.message);
-  // console.log("ISSUES", issues);
-//   const reader = response.body.getReader();
-//   const decoder = new TextDecoder();
-//   let jsonString = "";
-//   let done = false;
+  */
+ return `# This is the issue description for the file ${file}
 
-//   while (!done) {
-//     const { value, done: readerDone } = await reader.read();
-//     done = readerDone;
+ ### Accessibility Concerns:
 
-//     jsonString += decoder.decode(value, { stream: !done });
-
-//     // // Handle incomplete JSON
-//     // try {
-//     //     const parsedData = JSON.parse(jsonString);
-//     //     console.log("Parsed Data:", parsedData);
-//     //     // Do something with parsedData here (e.g., extracting issues)
-//     //     issues = parsedData;
-//     // } catch (error) {
-//     //     if (done) {
-//     //         console.error("Error parsing JSON:", error);
-//     //     }
-//     // }
-//   }
+ - The image tag in line 10 is missing an alt attribute. This is a problem because screen readers rely on the alt attribute to describe the content of the image to visually impaired users. To fix this issue, add an alt attribute to the image tag.
+ yay!`
 }
 
-export { getAccessibilityConcerns, createIssueDescription };
+async function createGithubIssue(title: string, body: string, repo: string) {
+// makes a POST request to the Github API to create an issue
+  const response = await fetch(`https://api.github.com/repos/${repo}/issues`, { //TODO: fix this URL
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${gitHubToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ title, body }),
+  });
+  const data = await response.json();
+  console.log("ISSUE CREATED:", data);
+  return data;
+}
+
+
+
+
+
+export { getAccessibilityConcerns, createIssueDescription, createGithubIssue };
