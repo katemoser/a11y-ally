@@ -10,28 +10,30 @@ interface AccessibilityConcernDetailsProps {
 
 export default function AccessibilityConcernDetails({ concern, createIssue, remove, repo }:AccessibilityConcernDetailsProps) {
     return (
-        <>
-            <h3>
-              <span className="text-red-700">{concern.file}</span>:{" "}
-              {concern.title}
-            </h3>
-
-            <p>{concern.description}</p>
-            <div className="flex justify-center my-5">
-              <button
-                className="bg-green-500 rounded-sm px-2 py-1"
-                onClick={()=> createIssue(concern.file, repo)}
-              >
-                Create Issue
-              </button>
-              <button
-                className=" bg-red-400 rounded-sm px-2 py-1"
-                onClick={remove}
-              >
-                Not Today
-              </button>
+        <div className="card p-3 space-y-4">
+            <div className="text-sm text-red-700">
+                {concern.file}
             </div>
-          </>
+            <div className="card-title">
+                {concern.title}
+            </div>
+
+            <div className="card-body">{concern.description}</div>
+            <div className="flex justify-right my-5 space-x-10">
+                <button
+                    className="btn btn-primary"
+                    onClick={() => createIssue(concern.file, repo)}
+                >
+                    Generate Issue
+                </button>
+                <button
+                    className="btn btn-warning"
+                    onClick={remove}
+                >
+                    Not Today
+                </button>
+            </div>
+        </div>
     )
 }
         // <div className="bg-white shadow overflow-hidden sm:rounded-lg">

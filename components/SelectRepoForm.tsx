@@ -20,7 +20,7 @@ export default function SelectRepoForm() {
         <p className="my-4">
           github.com/
           <input
-          className="border border-gray-300 rounded "
+          className="border rounded "
             type="text"
             id="repo"
             onChange={(e) => setRepo(e.target.value)}
@@ -28,7 +28,7 @@ export default function SelectRepoForm() {
         </p>
         <button
           type="submit"
-          className="text-white bg-green-600 rounded-lg px-2"
+          className="btn btn-primary rounded-lg px-2"
           onClick={handleSubmit}
         >
           Check for accessibility concerns

@@ -31,26 +31,26 @@ export default function IssueEditor({
   return (
     <div className="h-full flex flex-col">
       <>
-        <h1>Title:</h1>
+        <label htmlFor="title">Title:</label>
         <input
           type="text"
           name="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full border border-gray-300 rounded p-2 bg-slate-900 text-slate-300"
+          className="w-full rounded p-2 bg-[#0c1118] text-slate-300"
         />
-        <h2>Body:</h2>
+        <label htmlFor="body">Body:</label>
         <div className="flex-grow">
-          <MDEditor value={markdown} onChange={setMarkdown} height="100%" />
+          <MDEditor value={markdown} onChange={setMarkdown} height={450} />
         </div>
-        <div className="flex justify-center my-5">
+        <div className="flex justify-right my-5 space-x-10">
           <button
-            className="bg-green-500 rounded-sm px-2 py-1"
+            className="btn btn-primary"
             onClick={handleSubmit}
           >
             Create Issue on Github
           </button>
-          <button className="bg-red-400 rounded-sm px-2 py-1" onClick={remove}>
+          <button className="btn btn-warning" onClick={remove}>
             Discard Issue
           </button>
         </div>
