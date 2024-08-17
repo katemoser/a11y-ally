@@ -6,62 +6,55 @@ const greptileApiKey = process.env.GREPTILE_API_KEY;
 console.log("BASE URL:", baseUrl);
 
 async function getAccessibilityConcerns(repo: string) {
+/**
+  const query = {
+    messages: [
+      {
+        content: `Look closely at this code base and find files that have accessibility concerns.
+        These accessibility concerns could include color contrast issues, missing alt attributes on images, missing ARIA attributes, or any other accessibility issues.
+        Be specific in your findings.
+        The output response should be a json object formatted like this:
+        {concerns: [{"id": string, "title": string, "description": string, "file": string},]}
+        where "id" is a unique identifier for the concern, "title" is a brief description of the concerns,
+        "description" is a detailed description of the accessibility concerns in that file, and "file" is the file path where the concern is located.
+        Only include one item in the concerns array for each file that has accessibility concerns. If there is more than one concern in that file, summarize
+        the concerns in both the title and the description.
+        The source code may be written in any language or framework. Adjust accordingly when looking for accessibility concerns.
+        Do not look for accessibility concerns in files that belong to third party libraries or frameworks.`,
+        role: "user",
+      },
+    ],
+    repositories: [
+      {
+        remote: "github",
+        repository: `katemoser/${repo}`,
+        branch: "main",
+      },
+    ],
+    jsonMode: true,
+    // sessionId: "accessibility-test",
+    // genius: true,
+  };
 
-  // const query = {
-  //   messages: [
-  //     {
-  //       content: `Look closely at this code base and find files that have accessibility concerns.
-  //       The output response should be a json object formatted like this:
-  //       {concerns: [{"id": string, "title": string, "description": string, "file": string},]}
-  //       where "id" is a unique identifier for the concern, "title" is a brief description of the concerns,
-  //       "description" is a detailed description of the accessibility concerns in that file, and "file" is the file path where the concern is located.
-  //       Only include one item in the concerns array for each file that has accessibility concerns. If there is more than one concern in that file, summarize
-  //       the concerns in both the title and the description.
-  //       The source code may be written in any language or framework. Adjust accordingly when looking for accessibility concerns.
-  //       Do not look for accessibility concerns in files that belong to third party libraries or frameworks.`,
-  //       role: "user",
-  //     },
-  //   ],
-  //   repositories: [
-  //     {
-  //       remote: "github",
-  //       repository: `katemoser/${repo}`,
-  //       branch: "main",
-  //     },
-  //   ],
-  //   jsonMode: true,
-  //   // sessionId: "accessibility-test",
-  //   // genius: true,
-  // };
+  const response = await fetch(`${baseUrl}/query`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${greptileApiKey}`,
+      "X-GitHub-Token": gitHubToken,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(query),
+  });
 
-  // //   const options = {
-  // //     method: "POST",
-  // //     headers: {
-  // //       Authorization: `Bearer ${greptileApiKey}`,
-  // //       "X-GitHub-Token": gitHubToken,
-  // //       "Content-Type": "application/json",
-  // //     },
-  // //     body: JSON.stringify(query),
-  // //   };
-  // //   console.log("OPTIONS", options);
+  console.log(response);
+  const data = await response.json();
+  console.log("DATA:", data);
+  const message = JSON.parse(data.message);
+  console.log("MESSAGE:", message);
 
-  // const response = await fetch(`${baseUrl}/query`, {
-  //   method: "POST",
-  //   headers: {
-  //     Authorization: `Bearer ${greptileApiKey}`,
-  //     "X-GitHub-Token": gitHubToken,
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(query),
-  // });
+  return message.concerns;
 
-  // console.log(response);
-  // const data = await response.json();
-  // console.log("DATA:", data);
-  // const message = JSON.parse(data.message);
-  // console.log("MESSAGE:", message);
-
-  // return message.concerns;
+  **/
   const concerns = [
     {
       id: 'AC001',
@@ -85,53 +78,52 @@ async function getAccessibilityConcerns(repo: string) {
   return concerns;
 }
 
-/**  */
 async function createIssueDescription(file:string, repo: string) {
+/*
+  const query = {
+    messages: [
+      {
+        content: `Look closely at the file ${file} and find all accessibility concerns.
+            The output response should be just the body of the issue formatted to be displayed as markdown.
+            Do not include anything other than the body of the issue in your response.
+              include the following information:
+                - The file path where the issues are located
+                - information about each accessibility issue in this file. Include:
+                  - A code snippet of each of the concerns
+                  - A description of why this is a problem and how to fix the issue
+                  - A code snippet of the fixed code
+              `,
+        role: "user",
+      },
+    ],
+    repositories: [
+      {
+        remote: "github",
+        repository: `katemoser/${repo}`,
+        branch: "main",
+      },
+    ],
+    // sessionId: "accessibility-test",
+    //   genius: true,
+  };
 
-  // const query = {
-  //   messages: [
-  //     {
-  //       content: `Look closely at the file ${file} and find all accessibility concerns.
-  //           The output response should be just the body of the issue formatted to be displayed as markdown.
-  //           Do not include anything other than the body of the issue in your response.
-  //             include the following information:
-  //               - The file path where the issues are located
-  //               - information about each accessibility issue in this file. Include:
-  //                 - A code snippet of each of the concerns
-  //                 - A description of why this is a problem and how to fix the issue
-  //                 - A code snippet of the fixed code
-  //             `,
-  //       role: "user",
-  //     },
-  //   ],
-  //   repositories: [
-  //     {
-  //       remote: "github",
-  //       repository: `katemoser/${repo}`,
-  //       branch: "main",
-  //     },
-  //   ],
-  //   sessionId: "accessibility-test",
-  //   // jsonMode: true,
-  //   //   genius: true,
-  // };
+  const options = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${greptileApiKey}`,
+      "X-GitHub-Token": gitHubToken,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(query),
+  };
+  console.log("OPTIONS", options);
 
-  // const options = {
-  //   method: "POST",
-  //   headers: {
-  //     Authorization: `Bearer ${greptileApiKey}`,
-  //     "X-GitHub-Token": gitHubToken,
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(query),
-  // };
-  // console.log("OPTIONS", options);
-
-  // const response = await fetch(`${baseUrl}/query`, options);
-  // console.log(response);
-  // const data = await response.json();
-  // console.log("ISSUE DATA:", data);
-  // return data.message
+  const response = await fetch(`${baseUrl}/query`, options);
+  console.log(response);
+  const data = await response.json();
+  console.log("ISSUE DATA:", data);
+  return data.message
+  */
 
  return `# This is the issue description for the file ${file}
 
@@ -149,7 +141,7 @@ async function createIssueDescription(file:string, repo: string) {
 
 async function createGithubIssue(title: string, body: string, repo: string) {
 // makes a POST request to the Github API to create an issue
-  const response = await fetch(`https://api.github.com/repos/${repo}/issues`, { //TODO: fix this URL
+  const response = await fetch(`https://api.github.com/repos/${repo}/issues`, { //TODO: fix this URL, make into a constant
     method: "POST",
     headers: {
       Authorization: `Bearer ${gitHubToken}`,

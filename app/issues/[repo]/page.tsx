@@ -1,4 +1,5 @@
 "use server";
+
 import Loading from "@/app/loading";
 import { getAccessibilityConcerns } from "@/app/actions";
 import AccessibilityConcernCardDeck from "@/components/AccessibilityConcernCardDeck";
@@ -16,7 +17,7 @@ export default async function AccessibilityConcerns({
   try {
     concerns = await getAccessibilityConcerns(repo);
   } catch (error) {
-    console.error(error);
+    console.error(error); //TODO: log error somehow
     return <ErrorMessage message="There was an error loading the concerns" />;
   }
 
