@@ -15,6 +15,17 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('daisyui')
+  ],
+  daisyui: {
+    styled: true,
+    themes: ["dracula"],
+    base: true,
+    utils: true,
+    logs: true,
+    rtl: false,
+    themeRoot: ":root",
+  },
 };
 export default config;

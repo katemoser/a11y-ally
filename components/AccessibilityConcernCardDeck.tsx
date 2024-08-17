@@ -3,10 +3,11 @@
 import AccessibilityConcernCard from "./AccessibilityConcernCard";
 import { Concern } from "@/types/components";
 import { useState } from "react";
+import NoConcernsLeft from "./NoConcernsLeft";
 
 export default function AccessibilityConcernCardDeck({
   initialConcerns,
-  repo
+  repo,
 }: {
   initialConcerns: Concern[];
   repo: string;
@@ -20,15 +21,12 @@ export default function AccessibilityConcernCardDeck({
     setConcerns((concerns) => concerns.slice(1));
   }
   return (
-    <div >
+    <div>
       {concerns.length === 0 ? (
-        <>
-        <div>No more concerns</div>
-        <a href="/">Try again!</a>
-        </>
+        <NoConcernsLeft />
       ) : (
         <>
-          <div className="bg-purple-100 m-5 rounded-lg p-3 flex items-center min-h-60">
+          <div className="bg-base-300 m-5 rounded-lg p-3 flex items-center min-h-60">
             <AccessibilityConcernCard
               key={currentConcern.id}
               concern={currentConcern}
@@ -36,7 +34,10 @@ export default function AccessibilityConcernCardDeck({
               repo={repo}
             />
           </div>
-          <div> and {concerns.length - 1} more</div>
+          <div className="text-right pr-10">
+            {" "}
+            + {concerns.length - 1} more...
+          </div>
         </>
       )}
     </div>

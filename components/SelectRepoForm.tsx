@@ -14,13 +14,16 @@ export default function SelectRepoForm() {
   }
 
   return (
-    <div >
-      <p>Enter the URL of the repo you'd like to create issues for: </p>
+    <div className="hero">
+      <div className="hero-content text-center">
+        <div className="max-w-lg">
+      <h1 className="text-5xl font-bold">Accessibility Audit</h1>
+      <p className="py-6 text-lg">Enter the URL of the repo you'd like to audit for accessibility:</p>
       <form>
-        <p className="my-4">
-          github.com/
+        <p className="mb-10 text-xl">
+          github.com/{process.env.NEXT_PUBLIC_GITHUB_USERNAME}/
           <input
-          className="border border-gray-300 rounded "
+          className="border rounded "
             type="text"
             id="repo"
             onChange={(e) => setRepo(e.target.value)}
@@ -28,12 +31,14 @@ export default function SelectRepoForm() {
         </p>
         <button
           type="submit"
-          className="text-white bg-green-600 rounded-lg px-2"
+          className="btn btn-primary rounded-lg px-2"
           onClick={handleSubmit}
         >
           Check for accessibility concerns
         </button>
       </form>
+      </div>
+      </div>
     </div>
   );
 }
