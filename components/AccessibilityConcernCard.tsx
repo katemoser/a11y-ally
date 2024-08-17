@@ -33,7 +33,7 @@ export default function AccessibilityConcernCard({
   if (issue.error) return <ErrorMessage message="There was an error while creating your issue"/>;
 
   return (
-    <div className="flex-grow">
+    <section className="flex-grow" aria-label="Details on accessibility concern">
       {issue.data ? (
         <IssueEditor
           initialIssue={issue.data}
@@ -41,6 +41,7 @@ export default function AccessibilityConcernCard({
           repo={repo}
           create={handleGithubIssueSubmission}
           remove={remove}
+          aria-live="polite"
         />
       ) : (
         <AccessibilityConcernDetails
@@ -48,8 +49,9 @@ export default function AccessibilityConcernCard({
           createIssue={handleIssueCreation}
           remove={remove}
           repo={repo}
+          aria-live="polite"
         />
       )}
-    </div>
+    </section>
   );
 }
