@@ -32,6 +32,7 @@ export default function AccessibilityConcernCardDeck({
               concern={currentConcern}
               remove={popConcern}
               repo={repo}
+              aria-live="polite"
             />
           </div>
           <div className="text-right pr-10">
