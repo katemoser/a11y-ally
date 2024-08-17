@@ -6,6 +6,8 @@ import { Concern } from "@/types/components";
 import Loading from "@/app/loading";
 
 import { useIssueCreation } from "@/hooks/useIssueCreation";
+import ErrorMessage from "./ErrorMessage";
+import IssueSubmittedMessage from "./IssueSubmittedMessage";
 
 export interface IssueState {
   data: string;
@@ -27,8 +29,8 @@ export default function AccessibilityConcernCard({
 
 
   if (issue.isLoading) return <Loading />;
-  if (issue.isSubmitted) return <div>Issue submitted!</div>;
-  if (issue.error) return <div>There was an error: {issue.error}</div>;
+  if (issue.isSubmitted) return <IssueSubmittedMessage next={remove}/>;
+  if (issue.error) return <ErrorMessage message="There was an error while creating your issue"/>;
 
   return (
     <div className="flex-grow">
@@ -36,6 +38,7 @@ export default function AccessibilityConcernCard({
         <IssueEditor
           initialIssue={issue.data}
           initialTitle={concern.title}
+          repo={repo}
           create={handleGithubIssueSubmission}
           remove={remove}
         />

@@ -3,10 +3,11 @@
 import AccessibilityConcernCard from "./AccessibilityConcernCard";
 import { Concern } from "@/types/components";
 import { useState } from "react";
+import NoConcernsLeft from "./NoConcernsLeft";
 
 export default function AccessibilityConcernCardDeck({
   initialConcerns,
-  repo
+  repo,
 }: {
   initialConcerns: Concern[];
   repo: string;
@@ -20,26 +21,9 @@ export default function AccessibilityConcernCardDeck({
     setConcerns((concerns) => concerns.slice(1));
   }
   return (
-    <div >
+    <div>
       {concerns.length === 0 ? (
-        <div className="hero bg-base-200 min-h-screen">
-        <div className="hero-content text-center">
-          <div className="max-w-md">
-            <h1 className="text-5xl font-bold">No more concerns!</h1>
-            <p className="py-6">
-              Thank you for using our tool today. We hope you found it helpful, and you learned something new about accessibility.
-
-            </p>
-            <a href="/"  className="btn btn-primary">Try Again!</a>
-          </div>
-        </div>
-      {/* </div>
-        <div className="hero">
-            <div className="hero-content">
-        <div>No more concerns</div>
-        <a href="/" className="btn btn-primary">Try again!</a>
-        </div>*/}
-        </div>
+        <NoConcernsLeft />
       ) : (
         <>
           <div className="bg-base-300 m-5 rounded-lg p-3 flex items-center min-h-60">
@@ -50,7 +34,10 @@ export default function AccessibilityConcernCardDeck({
               repo={repo}
             />
           </div>
-          <div> and {concerns.length - 1} more</div>
+          <div className="text-right pr-10">
+            {" "}
+            + {concerns.length - 1} more...
+          </div>
         </>
       )}
     </div>

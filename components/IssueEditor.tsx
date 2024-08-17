@@ -6,17 +6,15 @@ import MDEditor from "@uiw/react-md-editor";
 interface EditorProps {
   initialIssue: string;
   initialTitle: string;
+  repo: string;
   create: (title: string, body: string, repo: string) => void;
   remove: () => void;
-}
-interface IssueState {
-  title: string;
-  markdown: string;
 }
 
 export default function IssueEditor({
   initialIssue,
   initialTitle,
+  repo,
   create,
   remove,
 }: EditorProps) {
@@ -25,7 +23,7 @@ export default function IssueEditor({
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    create(title, markdown, "katemoser/one-thing");
+    create(title, markdown, `${process.env.NEXT_PUBLIC_GITHUB_USERNAME}/${repo}`);
   }
 
   return (
