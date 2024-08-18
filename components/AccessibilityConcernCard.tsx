@@ -19,11 +19,9 @@ export interface IssueState {
 export default function AccessibilityConcernCard({
   concern,
   remove,
-  repo
 }: {
   concern: Concern;
   remove: () => void;
-  repo: string;
 }) {
   const { issue, handleIssueCreation, handleGithubIssueSubmission } = useIssueCreation();
 
@@ -38,7 +36,6 @@ export default function AccessibilityConcernCard({
         <IssueEditor
           initialIssue={issue.data}
           initialTitle={concern.title}
-          repo={repo}
           create={handleGithubIssueSubmission}
           remove={remove}
           aria-live="polite"
@@ -48,7 +45,6 @@ export default function AccessibilityConcernCard({
           concern={concern}
           createIssue={handleIssueCreation}
           remove={remove}
-          repo={repo}
           aria-live="polite"
         />
       )}

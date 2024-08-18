@@ -1,18 +1,23 @@
+"use client";
+
 import { Concern } from "@/types/components";
+import { useContext } from "react";
+import { useRepo } from "@/app/contexts/RepoContext";
 
 interface AccessibilityConcernDetailsProps {
   concern: Concern;
   createIssue: (file: string, repo: string) => void;
   remove: () => void;
-  repo: string;
 }
 
 export default function AccessibilityConcernDetails({
   concern,
   createIssue,
   remove,
-  repo,
 }: AccessibilityConcernDetailsProps) {
+
+  const { repo } = useRepo();
+
   return (
     <main className="card p-3 space-y-4">
       <h2 className="text-sm text-accent font-semibold">{concern.file}</h2>

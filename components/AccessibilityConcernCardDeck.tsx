@@ -7,12 +7,12 @@ import NoConcernsLeft from "./NoConcernsLeft";
 
 export default function AccessibilityConcernCardDeck({
   initialConcerns,
-  repo,
 }: {
   initialConcerns: Concern[];
-  repo: string;
 }) {
   const [concerns, setConcerns] = useState(initialConcerns);
+//   const {repo} = useContext(RepoContext);
+
   const currentConcern = concerns[0];
 
   console.log("Card deck rendered, concerns = ", concerns);
@@ -31,7 +31,6 @@ export default function AccessibilityConcernCardDeck({
               key={currentConcern.id}
               concern={currentConcern}
               remove={popConcern}
-              repo={repo}
               aria-live="polite"
             />
           </div>
