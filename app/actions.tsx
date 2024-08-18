@@ -3,12 +3,13 @@ const GREPTILE_API_BASE_URL = process.env.GREPTILE_API_BASE_URL;
 const GREPTILE_API_KEY = process.env.GREPTILE_API_KEY;
 const GITHUB_API_BASE_URL = process.env.GITHUB_API_BASE_URL;
 const GITHUB_PERSONAL_ACCESS_TOKEN = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
+const GITHUB_USERNAME = process.env.NEXT_PUBLIC_GITHUB_USERNAME;
 
 console.log("BASE URL:", GREPTILE_API_BASE_URL);
 
 async function getAccessibilityConcerns(repo: string) {
 
-  console.log("in getAccessibilityconcerns, repo:", repo);
+  console.log("in getAccessibilityconcerns, repo:", repo, "GITHUB_USERNAME:", GITHUB_USERNAME);
   const query = {
     messages: [
       {
@@ -29,7 +30,7 @@ async function getAccessibilityConcerns(repo: string) {
     repositories: [
       {
         remote: "github",
-        repository: `katemoser/${repo}`,
+        repository: `${GITHUB_USERNAME}/${repo}`,
         branch: "main",
       },
     ],
@@ -102,7 +103,7 @@ async function createIssueDescription(file:string, repo: string) {
     repositories: [
       {
         remote: "github",
-        repository: `katemoser/${repo}`,
+        repository: `${GITHUB_USERNAME}/${repo}`,
         branch: "main",
       },
     ],
@@ -155,9 +156,5 @@ async function createGithubIssue(title: string, body: string, repo: string) {
   console.log("ISSUE CREATED:", data);
   return data;
 }
-
-
-
-
 
 export { getAccessibilityConcerns, createIssueDescription, createGithubIssue };
