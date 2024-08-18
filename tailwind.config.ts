@@ -20,7 +20,7 @@ const config: Config = {
   ],
   daisyui: {
     styled: true,
-    themes: ["dracula", "retro"],
+    themes: ["light", "dracula"],
     base: true,
     utils: true,
     logs: true,
