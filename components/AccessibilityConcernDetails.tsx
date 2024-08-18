@@ -23,7 +23,7 @@ export default function AccessibilityConcernDetails({
       <h2 className="text-sm text-accent font-semibold">{concern.file}</h2>
       <h1 className="card-title">{concern.title}</h1>
 
-      <section className="card-body text-pretty white-pre-wrap bg-base-100 rounded-md">
+      <section className="card-body text-pretty whitespace-pre-wrap bg-base-100 rounded-md">
         <p>{concern.description}</p>
         <div className="flex justify-right mt-4 space-x-10">
           <button
@@ -36,7 +36,7 @@ export default function AccessibilityConcernDetails({
           <button
             className="btn btn-warning"
             onClick={remove}
-            aria-label="Dismiss this concern"
+            aria-label="Dismiss this concern and go to the next"
           >
             Not Today
           </button>

@@ -21,7 +21,7 @@ export default function SelectRepoForm() {
     <div className="hero">
       <div className="hero-content text-center">
         <div className="max-w-lg">
-      <h1 className="text-5xl font-bold">Accessibility Audit</h1>
+      <h1 className="text-5xl font-bold">A<span className="text-accent">11</span>y Ally</h1>
       <p className="py-6 text-lg">Enter the URL of the repo you'd like to audit for accessibility:</p>
       <form>
         <p className="mb-10 text-xl">
