@@ -1,16 +1,20 @@
 "use client";
+
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useRepo } from "@/app/contexts/RepoContext";
 
 export default function SelectRepoForm() {
-  const [repo, setRepo] = useState("");
+  const [formData, setFormData] = useState("");
   const router = useRouter();
+  const {setRepo} = useRepo();
 
-  console.log(repo);
+  // console.log(repo);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    router.push(`/issues/${repo}`);
+    setRepo(formData);
+    router.push(`/issues/${formData}`); // TODO: Change the name here, I don't like it!
   }
 
   return (
@@ -26,7 +30,7 @@ export default function SelectRepoForm() {
           className="border rounded "
             type="text"
             id="repo"
-            onChange={(e) => setRepo(e.target.value)}
+            onChange={(e) => setFormData(e.target.value)}
           />
         </p>
         <button

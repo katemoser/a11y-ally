@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState} from "react";
 import MDEditor from "@uiw/react-md-editor";
+
+import { useRepo } from "@/app/contexts/RepoContext";
 
 interface EditorProps {
   initialIssue: string;
   initialTitle: string;
-  repo: string;
   create: (title: string, body: string, repo: string) => void;
   remove: () => void;
 }
@@ -14,12 +15,13 @@ interface EditorProps {
 export default function IssueEditor({
   initialIssue,
   initialTitle,
-  repo,
   create,
   remove,
 }: EditorProps) {
   const [title, setTitle] = useState(initialTitle);
   const [markdown, setMarkdown] = useState(initialIssue);
+
+  const {repo} = useRepo();
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
