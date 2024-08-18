@@ -45,11 +45,27 @@ Open [http://localhost:3000](http://localhost:3000) in your brower to use the ap
 
 - First, enter the name of the repository you would like to audit:
 
+
+https://github.com/user-attachments/assets/7b6da3f4-069d-440d-98cc-c429165512a9
+
+
 - Several security concerns will be generated, organized by file. One by one, you can decide whether you want to create an issue or ignore the concern for now:
+
+
+https://github.com/user-attachments/assets/feb0a8e1-0e64-452a-a51f-48eccec2efbe
+
 
 - After generating the Issue text, you can edit the markdown and publish it to github:
 
+
+https://github.com/user-attachments/assets/61345872-81cb-4e48-bf14-2c53a8e268b2
+
+
 - Go look at your new issue in Github:
+
+
+https://github.com/user-attachments/assets/e8d7f44a-9164-497c-8212-3c603c3a877c
+
 
 - And that's it!
 
