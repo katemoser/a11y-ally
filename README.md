@@ -88,7 +88,7 @@ I would love to build this out into a milestone (sprint) creation tool; you coul
 
 ## Tools used
 
-- This was built with Greptile, Next.js, Typescript, and Tailwind.
+- This was built with Greptile, Next.js, Typescript, and Tailwind. Markdown editor by UIW.
 - I used DaisyUI for theming and styling.
 - I used GitHub Copilot in VScode to help find some sneaky syntax errors and add some tailwind classes.
 - I used ChatGPT for some broader questions about streaming data from an API and GitHub Personal Access Token permissions.
