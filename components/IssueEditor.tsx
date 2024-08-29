@@ -2,6 +2,7 @@
 
 import { useState} from "react";
 import MDEditor from "@uiw/react-md-editor";
+import rehypeSanitize from "rehype-sanitize";
 
 import { useRepo } from "@/app/contexts/RepoContext";
 
@@ -41,7 +42,11 @@ export default function IssueEditor({
         />
         <label htmlFor="body">Body:</label>
         <div className="flex-grow">
-          <MDEditor value={markdown} onChange={setMarkdown} height={450} />
+          <MDEditor
+            value={markdown}
+            previewOptions={{rehypePlugins: [[rehypeSanitize]]}}
+            onChange={setMarkdown}
+            height={450} />
         </div>
         <div className="flex justify-right my-5 space-x-10">
           <button
